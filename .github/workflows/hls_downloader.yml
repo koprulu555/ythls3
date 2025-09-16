@@ -1,0 +1,32 @@
+name: YouTube HLS Downloader
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Her 6 saatte bir (UTC)
+  workflow_dispatch:      # Elle tetiklemek için
+
+jobs:
+  download_hls:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repoyu çek
+        uses: actions/checkout@v4
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Gerekli paketleri yükle
+        run: pip install requests
+
+      - name: M3U playlist oluştur
+        run: python create_m3u.py
+
+      - name: Değişiklikleri commit et ve push yap
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add *.m3u
+          git diff --cached --quiet || (git commit -m "Update M3U playlist [skip ci]" && git push)
