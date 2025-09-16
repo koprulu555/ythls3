@@ -8,15 +8,13 @@ on:
 jobs:
   update-hls:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        method: [api, yt-dlp]  # İki yöntemi paralel çalıştır
 
     steps:
       - name: Repoyu çek
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Python kur
         uses: actions/setup-python@v5
@@ -25,18 +23,10 @@ jobs:
 
       - name: Gerekli paketleri yükle
         run: |
-          pip install requests
-          if [ "${{ matrix.method }}" = "yt-dlp" ]; then
-            pip install yt-dlp
-          fi
+          pip install requests yt-dlp
 
-      - name: HLS manifest'leri al (${{ matrix.method }} yöntemi)
-        run: |
-          if [ "${{ matrix.method }}" = "api" ]; then
-            python m3utojson.py
-          else
-            python yt_m3u8_downloader.py
-          fi
+      - name: HLS manifest'leri al (yt-dlp yöntemi)
+        run: python yt_m3u8_downloader.py
 
       - name: M3U playlist'ini oluştur
         run: python create_playlist.py
@@ -46,11 +36,14 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Sadece değişiklik varsa commit et
+          # Önce remote değişiklikleri çek
+          git pull origin main --rebase
+          
+          # Değişiklik olup olmadığını kontrol et
           if git diff --quiet; then
             echo "Değişiklik yok, commit atlanıyor."
           else
             git add .
-            git commit -m "Update HLS manifests (${{ matrix.method }} method) [skip ci]"
-            git push
+            git commit -m "Update HLS manifests [skip ci]"
+            git push origin main
           fi
