@@ -21,7 +21,7 @@ def get_hls_with_ytdlp(url):
     try:
         # yt-dlp ile HLS manifest URL'sini al
         result = subprocess.run(
-            ["yt-dlp", "-g", "--format", "best", url],
+            ["yt-dlp", "-g", "-f", "best", url],
             capture_output=True,
             text=True,
             timeout=30,
@@ -54,6 +54,7 @@ for channel in channels:
     url = channel.get("url")
 
     print(f"\n⏳ İşleniyor: {name}")
+    print(f"🔗 URL: {url}")
     
     # HLS manifest'ini al
     hls_content = get_hls_with_ytdlp(url)
@@ -64,12 +65,17 @@ for channel in channels:
         with open(filename, "w", encoding="utf-8") as f:
             f.write(hls_content)
         
-        print(f"✅ Kaydedildi: {filename}")
+        # Dosya içeriğini kontrol et
+        with open(filename, "r", encoding="utf-8") as f:
+            content = f.read()
+            line_count = len(content.split('\n'))
+        
+        print(f"✅ Kaydedildi: {filename} ({line_count} satır)")
         success_count += 1
     else:
         print(f"❌ HLS manifest alınamadı: {name}")
     
     # Kısa bir bekleme süresi
-    time.sleep(1)
+    time.sleep(2)
 
 print(f"\n🎉 İşlem tamamlandı! {success_count}/{len(channels)} kanal başarıyla güncellendi.")
