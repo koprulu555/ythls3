@@ -40,18 +40,18 @@ def create_master_playlist():
                 with open(m3u8_file, "r", encoding="utf-8") as f:
                     content = f.read().strip()
                 
-                if content and "#EXTM3U" in content:
-                    # GitHub raw content URL'si
-                    repo_name = os.environ.get('GITHUB_REPOSITORY', 'kullanici/repo')
-                    branch = os.environ.get('GITHUB_REF', 'refs/heads/main').replace('refs/heads/', '')
-                    raw_url = f"https://raw.githubusercontent.com/{repo_name}/{branch}/{m3u8_file}"
+                if content and content.startswith("#EXTM3U"):
+                    # GitHub raw content URL'si - DÜZELTİLMİŞ
+                    raw_url = f"https://raw.githubusercontent.com/koprulu555/ythls3/main/{m3u8_file}"
                     
+                    # EXTINF satırı
                     m3u_content += f"#EXTINF:-1 tvg-id=\"{name}\" tvg-name=\"{name}\" group-title=\"YouTube\",{name}\n"
+                    # URL satırı
                     m3u_content += f"{raw_url}\n"
                     added_channels += 1
                     print(f"✅ Eklendi: {name}")
                 else:
-                    print(f"⚠️ Boş dosya: {name}")
+                    print(f"⚠️ Geçersiz dosya içeriği: {name}")
                     
             except Exception as e:
                 print(f"❌ Dosya okuma hatası ({name}): {e}")
@@ -64,6 +64,10 @@ def create_master_playlist():
     
     print(f"\n🎉 Ana playlist oluşturuldu: playlist.m3u")
     print(f"📊 Toplam {added_channels}/{len(channels)} kanal eklendi")
+    
+    # Playlist içeriğini göster
+    print("\n📋 Playlist içeriği:")
+    print(m3u_content)
     
     return added_channels > 0
 
