@@ -15,6 +15,7 @@ def create_master_playlist():
     try:
         with open("channels.json", "r", encoding="utf-8") as f:
             channels = json.load(f)
+        print(f"✅ {len(channels)} kanal yüklendi")
     except FileNotFoundError:
         print("❌ channels.json dosyası bulunamadı!")
         return False
@@ -34,15 +35,26 @@ def create_master_playlist():
         
         # Eğer m3u8 dosyası varsa playlist'e ekle
         if os.path.exists(m3u8_file):
-            # GitHub raw content URL'si
-            repo_name = os.environ.get('GITHUB_REPOSITORY', 'kullanici/repo')
-            branch = os.environ.get('GITHUB_REF', 'refs/heads/main').replace('refs/heads/', '')
-            raw_url = f"https://raw.githubusercontent.com/{repo_name}/{branch}/{m3u8_file}"
-            
-            m3u_content += f"#EXTINF:-1, {name}\n"
-            m3u_content += f"{raw_url}\n"
-            added_channels += 1
-            print(f"✅ Eklendi: {name}")
+            try:
+                # Dosya içeriğini kontrol et (boş olmamalı)
+                with open(m3u8_file, "r", encoding="utf-8") as f:
+                    content = f.read().strip()
+                
+                if content and "#EXTM3U" in content:
+                    # GitHub raw content URL'si
+                    repo_name = os.environ.get('GITHUB_REPOSITORY', 'kullanici/repo')
+                    branch = os.environ.get('GITHUB_REF', 'refs/heads/main').replace('refs/heads/', '')
+                    raw_url = f"https://raw.githubusercontent.com/{repo_name}/{branch}/{m3u8_file}"
+                    
+                    m3u_content += f"#EXTINF:-1 tvg-id=\"{name}\" tvg-name=\"{name}\" group-title=\"YouTube\",{name}\n"
+                    m3u_content += f"{raw_url}\n"
+                    added_channels += 1
+                    print(f"✅ Eklendi: {name}")
+                else:
+                    print(f"⚠️ Boş dosya: {name}")
+                    
+            except Exception as e:
+                print(f"❌ Dosya okuma hatası ({name}): {e}")
         else:
             print(f"⚠️ M3U8 dosyası bulunamadı: {m3u8_file}")
     
@@ -50,7 +62,9 @@ def create_master_playlist():
     with open("playlist.m3u", "w", encoding="utf-8") as f:
         f.write(m3u_content)
     
-    print(f"✅ Ana playlist oluşturuldu: playlist.m3u ({added_channels} kanal)")
+    print(f"\n🎉 Ana playlist oluşturuldu: playlist.m3u")
+    print(f"📊 Toplam {added_channels}/{len(channels)} kanal eklendi")
+    
     return added_channels > 0
 
 if __name__ == "__main__":
