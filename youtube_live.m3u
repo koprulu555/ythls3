@@ -1,0 +1,64 @@
+#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-PLAYLIST-TYPE:VOD
+#EXT-X-TARGETDURATION:10
+#EXT-X-MEDIA-SEQUENCE:1
+#EXTINF:-1 tvg-id="Cnn_Turk" tvg-name="Cnn_Turk" group-title="YouTube",Cnn_Turk
+https://www.youtube.com/watch?v=bdDfLLy9Y5k
+#EXTINF:-1 tvg-id="Haber_Turk" tvg-name="Haber_Turk" group-title="YouTube",Haber_Turk
+https://www.youtube.com/watch?v=RNVNlJSUFoE
+#EXTINF:-1 tvg-id="NTV" tvg-name="NTV" group-title="YouTube",NTV
+https://www.youtube.com/watch?v=qnpfhjMhMKY
+#EXTINF:-1 tvg-id="Haber_Global_TV" tvg-name="Haber_Global_TV" group-title="YouTube",Haber_Global_TV
+https://www.youtube.com/watch?v=6BX-NUzBSp8
+#EXTINF:-1 tvg-id="A_haber" tvg-name="A_haber" group-title="YouTube",A_haber
+https://www.youtube.com/watch?v=nmY9i63t6qo
+#EXTINF:-1 tvg-id="TRT_Haber" tvg-name="TRT_Haber" group-title="YouTube",TRT_Haber
+https://www.youtube.com/watch?v=TNax9QRxK40
+#EXTINF:-1 tvg-id="Ekol_Tv" tvg-name="Ekol_Tv" group-title="YouTube",Ekol_Tv
+https://www.youtube.com/watch?v=9KEThxQtWYA
+#EXTINF:-1 tvg-id="CNBC_E" tvg-name="CNBC_E" group-title="YouTube",CNBC_E
+https://www.youtube.com/watch?v=XihyuKSyUD0
+#EXTINF:-1 tvg-id="Halk_Tv" tvg-name="Halk_Tv" group-title="YouTube",Halk_Tv
+https://www.youtube.com/watch?v=EtQ2E-11IPY
+#EXTINF:-1 tvg-id="Sozcu_Tv" tvg-name="Sozcu_Tv" group-title="YouTube",Sozcu_Tv
+https://www.youtube.com/watch?v=ztmY_cCtUl0
+#EXTINF:-1 tvg-id="ShowMax" tvg-name="ShowMax" group-title="YouTube",ShowMax
+https://www.youtube.com/watch?v=Y3vGHFrsqrs
+#EXTINF:-1 tvg-id="24_Tv" tvg-name="24_Tv" group-title="YouTube",24_Tv
+https://www.youtube.com/watch?v=jDEuHBhjfmg
+#EXTINF:-1 tvg-id="Ulke_Tv" tvg-name="Ulke_Tv" group-title="YouTube",Ulke_Tv
+https://www.youtube.com/watch?v=FGUrybU1YTI
+#EXTINF:-1 tvg-id="Tv_100" tvg-name="Tv_100" group-title="YouTube",Tv_100
+https://www.youtube.com/watch?v=6g_DvD8e2T0
+#EXTINF:-1 tvg-id="TGRT_Haber" tvg-name="TGRT_Haber" group-title="YouTube",TGRT_Haber
+https://www.youtube.com/watch?v=CALsI-NMnuo
+#EXTINF:-1 tvg-id="Flash_Haber" tvg-name="Flash_Haber" group-title="YouTube",Flash_Haber
+https://www.youtube.com/watch?v=Hz9K_jzr94E
+#EXTINF:-1 tvg-id="Benguturk_Tv" tvg-name="Benguturk_Tv" group-title="YouTube",Benguturk_Tv
+https://www.youtube.com/watch?v=l8asPHqAd8Y
+#EXTINF:-1 tvg-id="Krt_Tv" tvg-name="Krt_Tv" group-title="YouTube",Krt_Tv
+https://www.youtube.com/watch?v=v5srSbD2WBk
+#EXTINF:-1 tvg-id="Akit_Tv" tvg-name="Akit_Tv" group-title="YouTube",Akit_Tv
+https://www.youtube.com/watch?v=QFLzGEQUZZ0
+#EXTINF:-1 tvg-id="Tele_1" tvg-name="Tele_1" group-title="YouTube",Tele_1
+https://www.youtube.com/watch?v=fNqmmqNNGp8
+#EXTINF:-1 tvg-id="Ulusal_Kanal" tvg-name="Ulusal_Kanal" group-title="YouTube",Ulusal_Kanal
+https://www.youtube.com/watch?v=dK96AZbCns0
+#EXTINF:-1 tvg-id="Tv_Net" tvg-name="Tv_Net" group-title="YouTube",Tv_Net
+https://www.youtube.com/watch?v=6DEEsrkWz1c
+#EXTINF:-1 tvg-id="A_Spor" tvg-name="A_Spor" group-title="YouTube",A_Spor
+https://www.youtube.com/watch?v=7uBpwcn2ZZ0
+#EXTINF:-1 tvg-id="Ht_Spor" tvg-name="Ht_Spor" group-title="YouTube",Ht_Spor
+https://www.youtube.com/watch?v=RdpqsTbi_KU
+#EXTINF:-1 tvg-id="Bein_Spor_Haber" tvg-name="Bein_Spor_Haber" group-title="YouTube",Bein_Spor_Haber
+https://www.youtube.com/watch?v=CtUorRNqC4s
+#EXTINF:-1 tvg-id="Bloomberg_Ht" tvg-name="Bloomberg_Ht" group-title="YouTube",Bloomberg_Ht
+https://www.youtube.com/watch?v=hHSmBJk6w0c
+#EXTINF:-1 tvg-id="Eko_Turk" tvg-name="Eko_Turk" group-title="YouTube",Eko_Turk
+https://www.youtube.com/watch?v=Son5meUMZuU
+#EXTINF:-1 tvg-id="Yesilcam_Tv" tvg-name="Yesilcam_Tv" group-title="YouTube",Yesilcam_Tv
+https://www.youtube.com/watch?v=Pq7ndgZHjjE
+#EXTINF:-1 tvg-id="Kemal_Sunal_Filmleri" tvg-name="Kemal_Sunal_Filmleri" group-title="YouTube",Kemal_Sunal_Filmleri
+https://www.youtube.com/watch?v=hfx8H7YrmTw
+#EXT-X-ENDLIST
