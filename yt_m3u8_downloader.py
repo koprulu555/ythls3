@@ -2,6 +2,7 @@ import json
 import subprocess
 import os
 import time
+import requests
 
 # m3u8 klasörünü oluştur
 os.makedirs("m3u8", exist_ok=True)
@@ -10,43 +11,65 @@ os.makedirs("m3u8", exist_ok=True)
 try:
     with open("channels.json", "r", encoding="utf-8") as f:
         channels = json.load(f)
+    print(f"✅ {len(channels)} kanal yüklendi")
 except FileNotFoundError:
     print("❌ channels.json dosyası bulunamadı!")
     exit(1)
 
-success_count = 0
-for channel in channels:
-    name = channel.get("name")
-    url = channel.get("url")
-
-    print(f"⏳ İşleniyor: {name} - {url}")
-
+def get_hls_with_ytdlp(url):
+    """yt-dlp ile HLS manifest URL'sini alır"""
     try:
+        # yt-dlp ile HLS manifest URL'sini al
         result = subprocess.run(
-            ["yt-dlp", "-g", "-f", "best", url],
+            ["yt-dlp", "-g", "--format", "best", url],
             capture_output=True,
             text=True,
             timeout=30,
             check=True
         )
-        m3u8_url = result.stdout.strip()
-        if m3u8_url.startswith("http"):
-            # Doğrudan HLS URL'sini içeren basit bir m3u8 dosyası oluştur
-            with open(f"m3u8/{name}.m3u8", "w", encoding="utf-8") as f_out:
-                f_out.write("#EXTM3U\n")
-                f_out.write(f"#EXT-X-STREAM-INF:BANDWIDTH=1000000,RESOLUTION=1920x1080\n")
-                f_out.write(m3u8_url + "\n")
-            print(f"✅ Kaydedildi: m3u8/{name}.m3u8")
-            success_count += 1
-        else:
-            print(f"⚠️ Geçersiz çıktı: {name}")
-
-        # Kısa bir bekleme süresi
-        time.sleep(1)
-
+        
+        hls_url = result.stdout.strip()
+        if hls_url and hls_url.startswith("http"):
+            # HLS manifest içeriğini indir
+            response = requests.get(hls_url, timeout=30)
+            response.raise_for_status()
+            return response.text
+        
+        return None
+        
     except subprocess.CalledProcessError as e:
-        print(f"❌ Hata oluştu ({name}): {e.stderr.strip()}")
+        print(f"❌ yt-dlp hatası: {e.stderr.strip()}")
+        return None
     except subprocess.TimeoutExpired:
-        print(f"⏰ Timeout: {name}")
+        print("⏰ yt-dlp timeout!")
+        return None
+    except Exception as e:
+        print(f"❌ İndirme hatası: {e}")
+        return None
 
-print(f"\n🎉 Toplam {success_count}/{len(channels)} kanal başarıyla işlendi.")
+# Her kanal için işlemleri gerçekleştir
+success_count = 0
+for channel in channels:
+    name = channel.get("name")
+    url = channel.get("url")
+
+    print(f"\n⏳ İşleniyor: {name}")
+    
+    # HLS manifest'ini al
+    hls_content = get_hls_with_ytdlp(url)
+    
+    if hls_content:
+        # Dosyayı kaydet
+        filename = os.path.join("m3u8", f"{name}.m3u8")
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write(hls_content)
+        
+        print(f"✅ Kaydedildi: {filename}")
+        success_count += 1
+    else:
+        print(f"❌ HLS manifest alınamadı: {name}")
+    
+    # Kısa bir bekleme süresi
+    time.sleep(1)
+
+print(f"\n🎉 İşlem tamamlandı! {success_count}/{len(channels)} kanal başarıyla güncellendi.")
